@@ -1,6 +1,6 @@
 Changelog
 Version 1.0.0
-
+Date：2024.11.18
     Initial Release
         Developed a utility class DatabaseUtility that provides various methods for managing CSV data, including adding, deleting, reading, and writing data to files.
         Integrated functionality for handling CSV files, including reading headers and data, and performing modifications such as adding or deleting specific rows.
