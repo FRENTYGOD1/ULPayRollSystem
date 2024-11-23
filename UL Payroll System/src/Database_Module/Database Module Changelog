@@ -1,23 +1,39 @@
-# Database Module Changelog
+Changelog
+Version 1.0.0
 
-## [Unreleased]
-### Added
-- **Backup and Restore Path Handling**: Introduced the `getBackpath()` method to retrieve the backup directory path.
-- **Backup Data Feature**: Added a `backupData()` method that retrieves the backup path and calls `BackupDataExtends()` to back up data.
-- **Restore Data Feature**: Added a `restoreData()` method that retrieves the backup path and calls `RestoreDataExtends()` to restore data from backup.
-- **CSV File Management**: Added options for users to select CSV files for adding or deleting data through a menu interface.
+    Initial Release
+        Developed a utility class DatabaseUtility that provides various methods for managing CSV data, including adding, deleting, reading, and writing data to files.
+        Integrated functionality for handling CSV files, including reading headers and data, and performing modifications such as adding or deleting specific rows.
 
-### Changed
-- **Backup and Restore Method Signature**: 
-  - Updated `BackupDataExtends()` and `RestoreDataExtends()` to accept the backup directory path as a parameter. This allows more flexibility in managing the backup locations.
-  - Methods now directly call the `getBackpath()` function to get the backup path for operations.
-- **UI Updates**: Enhanced the user interface with more prompts and feedback for users to easily navigate through data management options.
+New Features:
 
-### Fixed
-- **Error Handling**: Fixed issues where the backup or restore path was not being properly passed to methods, leading to errors during backup/restore operations.
+    CSV File Handling:
+        Added functionality to read from and write to CSV files using readCsv and writeCsv methods.
+        getDataHeaders: Retrieves the headers (columns) from a CSV file, helping users understand the structure of the CSV files.
+        addDataToCsvFile: Appends new data to an existing CSV file.
+        deleteDataFromCsvFile: Removes data from the CSV file based on user input.
+        delete Rows by name, the payroll system is about the HR manage the whole staff, so i choose delete the data by name.
 
-## [v1.0.0.0] - 2024-11-22
-### Initial Release
-- Introduced core functionality for managing CSV files, including adding and deleting data.
-- Implemented basic backup and restore functionality using predefined backup paths.
+    Data Editing:
+        Added addData and deleteData methods to allow manipulation of in-memory data.
+        Implemented the ability to add or delete data from a CSV file via addOrDeleteData.
+        deleteRowsByName: Deletes rows from a CSV file based on a specific name (assumed to be the first column of the file).
 
+    Backup and Restore Functionality:
+        Added BackupData and RestoreData methods to allow backing up and restoring data to/from a predefined directory.
+        The backup process copies files and directories recursively, ensuring all files are securely backed up.
+        BackupDataExtends and RestoreDataExtends provide internal methods for handling backup and restore operations without user input for the paths.
+
+User Interface:
+
+    Menu System:
+        DatabaseMenu: Provides a command-line interface that allows users to interact with the database module.
+        Features include adding, deleting, viewing data, and performing backup/restore operations.
+    Viewing CSV Data:
+        Users can view the structure (headers) and data content of CSV files via the menu system.
+        Displays the structure of the selected CSV file using displayCsvStructure.
+        Allows for viewing CSV file data using the displayCsvData method.
+
+Error Handling:
+
+    Improved error handling across CSV operations, ensuring proper feedback is given when the file path is invalid or when errors occur during file reading/writing.
