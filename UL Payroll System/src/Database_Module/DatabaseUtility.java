@@ -6,19 +6,13 @@ import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.io.Writer;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.IOException;
+
 
 public class DatabaseUtility {
 
     // =======================================================================
     // Member Variables Section
     // =======================================================================
-    private List<String> data; // List to store data
-    private DatabaseUtility DBU; // Helper for recursive calls in backup and restore
-    private String line; // Line variable for reading CSV content
     private static final String DEFAULT_CSV_PATH = "src/resource/csv/";
 
 
