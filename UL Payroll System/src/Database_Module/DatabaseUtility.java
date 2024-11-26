@@ -4,6 +4,7 @@ package Database_Module;
 
 import java.io.*;
 import java.nio.file.*;
+import java.time.LocalDate;
 import java.util.*;
 import java.io.Writer;
 import java.io.FileWriter;
@@ -12,15 +13,26 @@ import java.io.IOException;
 
 public class DatabaseUtility {
 
-    // Variables section: holds data and other helper variables
+    // =======================================================================
+    // Member Variables Section
+    // =======================================================================
     private List<String> data; // List to store data
     private DatabaseUtility DBU; // Helper for recursive calls in backup and restore
     private String line; // Line variable for reading CSV content
     private static final String DEFAULT_CSV_PATH = "src/resource/csv/";
 
+
     // =======================================================================
-    // CsvReader part: Reading CSV files
+    // CsvReader Section: Methods for Reading CSV Files
     // =======================================================================
+
+    /**
+     * This method writes data to a CSV file.
+     *
+     * @param filePath The path where the CSV file will be written.
+     * @param data The data to be written, represented as a list of string arrays.
+     * @throws IOException If an error occurs while writing to the file.
+     */
 
     // Reads a CSV file and returns a list of string arrays (each array corresponds to a line in the CSV)
     public void writeCsv(String filePath, List<String[]> data) throws IOException {
@@ -73,118 +85,128 @@ public class DatabaseUtility {
 
 
     // =======================================================================
-    // DataEditor (Add and Delete Data) part
+    // DataEditor Section: Methods for Adding and Deleting Data
     // =======================================================================
 
-    // Adds a new data entry to the list
-    public void addData(String newData) {
-        if (newData != null && !newData.trim().isEmpty()) {
-            data.add(newData); // Add the new data to the list
-            System.out.println("Data added: " + newData);
-        } else {
-            System.out.println("Invalid data. Cannot be empty or null.");
-        }
-    }
+    // ============================== Add Data Section ==============================
 
-    public void addDataToCsvFile(String filePath, String newData) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.write(newData);  // Write the new data to the CSV file
-            writer.newLine();  // Add a new line after writing the data
-        } catch (IOException e) {
-            System.out.println("Error writing to the CSV file: " + e.getMessage());
-        }
-    }
+    /**
+     * This method adds a new data entry to the CSV file.
+     * It automatically generates unique values for id, account, password, and join_date.
+     *
+     * @param filePath The path to the CSV file where data will be added.
+     * @param newData The new data to be added (as an array of strings).
+     * @throws IOException If an error occurs while adding the data.
+     */
+    public void addDataToCsvFile(String filePath, String[] newData) throws IOException {
+        // Get the current data from the CSV file.
+        List<String[]> data = readCsv(filePath);
 
-    // Deletes a data entry from the list
-    public void deleteData(String dataToDelete) {
-        if (data.contains(dataToDelete)) { // Check if the data exists in the list
-            data.remove(dataToDelete); // Remove the data from the list
-            System.out.println("Data deleted: " + dataToDelete);
-        } else {
-            System.out.println("Data not found for deletion: " + dataToDelete);
-        }
-    }
+        // Initialize variables to store the maximum id, account, and password values.
+        int maxId = 0;
+        int maxAccount = 0;
+        int maxPassword = 0;
 
-    public void deleteDataFromCsvFile(String filePath, String dataToDelete) throws IOException {
-        // Read the current data from the CSV file
-        List<String[]> currentData = readCsv(filePath);
+        // Loop through the existing data to find the maximum id, account, and password values.
+        for (String[] row : data) {
+            int id = Integer.parseInt(row[1]);  // Assume id is in the second column.
+            maxId = Math.max(maxId, id);
 
-        // Create a list to hold rows that do not match the data to delete
-        List<String[]> updatedData = new ArrayList<>();
-
-        // Iterate through each row and add rows that don't match the data to delete
-        for (String[] row : currentData) {
-            String rowData = String.join(",", row);
-            if (!rowData.equals(dataToDelete)) {
-                updatedData.add(row);
+            // Try parsing account and password, assuming they're integers (handle exceptions if not).
+            try {
+                int account = Integer.parseInt(row[5]);  // Assume account is in the sixth column.
+                int password = Integer.parseInt(row[6]);  // Assume password is in the seventh column.
+                maxAccount = Math.max(maxAccount, account);
+                maxPassword = Math.max(maxPassword, password);
+            } catch (NumberFormatException e) {
+                System.out.println("Account and Password are not integers, skipping increment.");
             }
         }
 
-        // If no matching data was found to delete
-        if (currentData.size() == updatedData.size()) {
-            System.out.println("No matching data found to delete.");
-            return;
-        }
+        // Generate new unique values for id, account, and password.
+        int newId = maxId + 1;
+        int newAccount = maxAccount + 1;
+        int newPassword = maxPassword + 1;
+        String joinDate = LocalDate.now().toString();  // Get the current date in YYYY-MM-DD format.
 
-        // Write the updated data back to the CSV file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (String[] row : updatedData) {
-                writer.write(String.join(",", row));
-                writer.newLine();
-            }
-        }
+        // Update the newData array with the generated values.
+        newData[1] = String.valueOf(newId);  // Set the new id.
+        newData[5] = String.valueOf(newAccount);  // Set the new account.
+        newData[6] = String.valueOf(newPassword);  // Set the new password.
+        newData[8] = joinDate;  // Set the join_date to the current date.
 
-        System.out.println("Data has been deleted successfully.");
+        // Add the new data to the list.
+        data.add(newData);
+
+        // Write the updated data back to the CSV file.
+        writeCsv(filePath, data);
+        System.out.println("Data added successfully!");
     }
 
-    public void deleteRowsByName(String filePath, String nameToDelete) throws IOException {
-        // Read the data from the CSV file
-        List<String[]> csvData = readCsv(filePath);
+    // ============================== Delete Data Section ==============================
 
-        // Create a list to store rows that do not match the name to delete
-        List<String[]> updatedData = new ArrayList<>();
+    /**
+     * This method deletes a row from the CSV file based on the provided data (matching row).
+     *
+     * @param filePath The path to the CSV file.
+     * @param rowToDelete The row to be deleted (as an array of strings).
+     * @throws IOException If an error occurs while deleting the data.
+     */
+    public void deleteRowByIndex(String filePath, String[] rowToDelete) throws IOException {
+        // Read the data from the CSV file.
+        List<String[]> data = readCsv(filePath);
 
-        // Iterate over the rows and add rows that do not match the name to delete
-        for (String[] row : csvData) {
-            // Assuming the name is in the first column (modify this as needed)
-            if (!row[0].equalsIgnoreCase(nameToDelete)) {
-                updatedData.add(row);  // Add rows that do not match the name
-            }
-        }
+        // Remove the row that matches the provided rowToDelete.
+        data.removeIf(row -> Arrays.equals(row, rowToDelete));
 
-        // Write the updated data back to the CSV file
-        writeCsv(filePath, updatedData);
+        // Write the updated data back to the CSV file.
+        writeCsv(filePath, data);
     }
+
 
 
     // =======================================================================
-    // CSV Header Reading (for adding data) part
+    // CSV Header Reading Section: Fetching Column Headers
     // =======================================================================
 
-    // Reads and prints the headers from a CSV file
+    /**
+     * This method retrieves and prints the headers from a CSV file.
+     *
+     * @param filePath The path to the CSV file.
+     * @return A list of column headers.
+     * @throws IOException If an error occurs while reading the file.
+     */
+
     public List<String> getDataHeaders(String filePath) throws IOException {
         List<String> headers = new ArrayList<>();
 
-        // Read the first row (header) of the CSV to identify the column names
+        // Read the first row (header) of the CSV file.
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line = br.readLine();  // Read the first line of the file
+            String line = br.readLine();  // Read the first line of the file (header).
             if (line != null) {
-                String[] columns = line.split(",");  // Split the row by commas to get individual columns
-                headers.addAll(Arrays.asList(columns));  // Add the columns to the list
+                String[] columns = line.split(",");  // Split the row by commas to get columns.
+                headers.addAll(Arrays.asList(columns));  // Add the columns to the list.
             }
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("Error reading the CSV file.");
         }
 
-        return headers;  // Return the list of column headers
+        return headers;  // Return the list of column headers.
     }
 
     // =======================================================================
-    // Backup part: Backup database files to another directory
+    // Backup Section: Methods for Backing Up Data
     // =======================================================================
 
-    // Backs up the data from the original source directory to the destination directory
+    /**
+     * This method backs up data from the original directory to the destination directory.
+     *
+     * @param originalDataPathFile The original directory containing the data to be backed up.
+     * @param destinationDataPathFiles The destination directory where the backup will be saved.
+     * @throws IOException If an error occurs during the backup process.
+     */
+
     public static void BackupData(File originalDataPathFile, File destinationDataPathFiles) throws IOException {
         // Check if the destination folder exists, if not create it
         if (!destinationDataPathFiles.exists()) {
@@ -215,10 +237,16 @@ public class DatabaseUtility {
     }
 
     // =======================================================================
-    // Restore part: Restore database files from backup
+    // Restore Section: Methods for Restoring Data from Backup
     // =======================================================================
 
-    // Restores the data from the backup directory to the original directory
+    /**
+     * This method restores data from a backup directory to the original directory.
+     *
+     * @param backupDataPathFile The destination directory containing the backup.
+     * @param originalDataPathFiles The original directory where the data will be restored.
+     * @throws IOException If an error occurs during the restore process.
+     */
     public static void RestoreData(File backupDataPathFile, File originalDataPathFiles) throws IOException {
 
         // Check if the original data path exists, if not create it
