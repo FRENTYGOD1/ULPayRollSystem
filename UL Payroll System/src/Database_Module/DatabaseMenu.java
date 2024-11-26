@@ -12,12 +12,12 @@ public class DatabaseMenu {
 
         while (running) {
             System.out.println("\n===== Database Management Menu =====");
-            System.out.println("Check the csv list and structures");
-            System.out.println("1. Add or Delete Employee");
-            System.out.println("2. Backup Data");
-            System.out.println("3. Restore Data");
-            System.out.println("4. View CSV File Data");
-            System.out.println("5. Exit");
+            System.out.println("1. Check the csv list and structures");
+            System.out.println("2. Add or Delete Employee");
+            System.out.println("3. Backup Data");
+            System.out.println("4. Restore Data");
+            System.out.println("5. View CSV File Data");
+            System.out.println("6. Exit");
 
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
