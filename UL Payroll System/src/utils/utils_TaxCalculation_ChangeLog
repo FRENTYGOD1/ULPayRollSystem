@@ -1,0 +1,17 @@
+Version 1.0.0
+Date: 2024.11.28
+
+# Utils 
+## Initial Release
+
+### Tax Calculation:
+#### TaxCalculator.java:
+- Added progressive tax brackets to calculate deductions.
+- Supported salary-specific tax rules for both full-time and part-time employees.
+- Implemented utilities to calculate net salary after deductions.
+
+## New Features
+
+### Tax Calculation:
+- Provided detailed tax breakdowns in generated payslips.
+-  Customizable tax rules to comply with future policy changes.
