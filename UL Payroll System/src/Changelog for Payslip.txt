@@ -1,0 +1,28 @@
+# Changelog for Payslip.java
+## Version: 1.0.2
+### Date:02/12/2024
+
+
+### Added:
+
+####Attributes:
+- employeeId - Stores the ID of the employee linked to the payslip.
+- date - Automatically sets the payroll generation date to the current date using LocalDate.now().
+- grossPay - Represents the total annual salary before deductions.
+- netPay - Represents the annual salary after all applicable deductions.
+
+#### Constructor:
+##### Payslip(String employeeId, double grossPay, double netPay)
+- Initializes all attributes:
+- Sets the employeeId to the provided value.
+- Assigns the current date to date.
+- Initializes grossPay and netPay with provided values.
+
+#### Methods:
+##### toString()
+- Overrides the default toString method to provide a human-readable string representation of the payslip.
+- Includes details such as:
+-- Employee ID
+-- Payroll generation date
+-- Gross salary
+-- Net salary

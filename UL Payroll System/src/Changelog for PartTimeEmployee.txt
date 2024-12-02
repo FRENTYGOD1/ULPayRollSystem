@@ -1,0 +1,33 @@
+# Changelog for PartTimeEmployee.java
+## Version: 1.0.2
+### Date:02/12/2024
+
+### Added:
+
+#### Attributes:
+##### Instance Fields:
+- hourlyRate for storing the employee's hourly salary rate.
+- hoursWorked to track the total hours worked in a month.
+
+#### Constructor:
+- Extended the Employee class and added initialization for hourlyRate.
+
+#### Salary Computation:
+##### calculateMonthlyPay() Method:
+- Calculates the total monthly salary based on hourlyRate and hoursWorked.
+
+#### Salary Claim Check:
+##### isSalaryClaimRequired() Method:
+- Determines if a salary claim form is required (if hours worked are less than 40 in a month).
+
+#### Details Display:
+##### displayDetails() Method:
+###### Overrides the parent class's displayDetails() method to include part-time employee--specific details:
+- Hourly rate.
+- Hours worked.
+- Monthly salary.
+- Whether a salary claim form is required.
+
+#### Getter and Setter Methods:
+- Getters: getHourlyRate(), getHoursWorked() for retrieving the hourly rate and hours worked.
+- Setters: setHourlyRate(), setHoursWorked() for updating the hourly rate and hours worked.

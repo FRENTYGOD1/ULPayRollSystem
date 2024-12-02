@@ -1,0 +1,26 @@
+# Changelog for Employee.java
+## Version: 1.0.2
+### Date:02/12/2024
+
+### Added:
+
+#### Core Employee Properties:
+- Defined id, name, and role as protected fields for employee details.
+- Added static fields salaryScale and currentPoint for shared employee attributes.
+
+#### Constructor:
+- Created a constructor to initialize basic employee information (id, name, role).
+
+#### Abstract Method:
+- Defined calculateMonthlyPay() as an abstract method to enforce salary computation implementation in subclasses.
+
+#### Promotion Mechanism:
+- Added promoteToNextPoint() to increment the employee's current promotion level (currentPoint) and log the change.
+
+#### Getters:
+##### Implemented getter methods:
+- getid(), getName(), getRole() for instance-specific attributes.
+- getSalaryScale() and getCurrentPoint() for static fields.
+
+#### Display Method:
+- Added displayDetails() to print the employee's details.

@@ -1,0 +1,33 @@
+# Changelog for FullTimeEmployee.java
+## Version: 1.0.2
+### Date:02/12/2024
+
+### Added:
+
+#### Attributes:
+##### Static Fields:
+- inComeTax to store calculated income tax.
+- HEALTH_INSURANCE (constant) for a fixed health insurance deduction.
+- UNION_FEES (constant) for a fixed union fee deduction.
+- PRSI for calculated social insurance based on gross salary.
+- grossPay for storing the calculated gross salary.
+
+#### Constructor:
+- Extended the Employee base class to initialize employee-specific details (id, name, role) and set the salaryScale specific to full-time employees.
+
+#### Deductions Calculation:
+##### getDeductions() Method:
+- Calculates the total deductions (health insurance, union fees, PRSI, and income tax).
+- Utilizes TaxCalculation (from utils) to compute inComeTax.
+- Implements logic to determine if PRSI applies based on weekly gross salary thresholds.
+
+
+#### Salary Computation:
+##### calculateMonthlyPay() Method:
+- Overrides the abstract method from Employee to calculate the net monthly pay.
+- Computes gross salary using getSalaryScale() and getCurrentPoint().
+- Deducts calculated deductions from gross pay to return net salary.
+
+#### Getter for Gross Pay:
+##### getGrossPay() Method:
+- Returns the computed gross pay for reference or display.

@@ -1,0 +1,39 @@
+# Changelog for PayrollSystem.java
+## Version: 1.0.2
+### Date:02/12/2024
+
+### Added:
+
+#### Attributes:
+##### employees - List to manage Employee objects.
+##### payslips - List to store Payslip objects.
+##### Constants:
+- EMPLOYEE_DATA_CSV - File path for employee data.
+- POSITION_DATA_CSV - File path for position-scale data.
+
+#### Constructor:
+- Initializes the employees and payslips lists.
+
+#### Methods for Employee Management:
+##### loadEmployeeData()
+- Reads employee data from EmployeeData.csv.
+- Creates FullTimeEmployee objects and populates the employees list.
+- Handles CSV parsing and exception management.
+
+#### Payslip Generation:
+##### generatePayslips()
+- Iterates through all employees, calculates their net pay, and creates a Payslip object for each.
+- Adds the generated Payslip to the payslips list and prints it.
+
+#### Payslip Retrieval:
+##### getPaySlipById(String employeeId)
+- Retrieves a payslip by employee ID.
+- Reads employee details from EmployeeData.csv.
+- Uses helper methods to calculate gross salary (getSalaryByScalePoint, getSalaryByPosition).
+- Returns a new Payslip object with calculated gross and net pay.
+
+#### Helper Methods for Salary Calculation:
+##### getSalaryByScalePoint(String scalePoint)
+- Reads Position_Scale.csv and retrieves salary based on the scale point.
+##### getSalaryByPosition(String position)
+- Reads Position_Scale.csv and retrieves salary based on the position.
