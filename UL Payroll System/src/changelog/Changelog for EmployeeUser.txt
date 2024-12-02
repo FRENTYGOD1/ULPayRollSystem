@@ -1,0 +1,19 @@
+### Changelog for `EmployeeUser` Class
+
+#### Version 1.0.2
+#### Date:02/12/2024
+
+- **Added getter and setter methods for `username`:**
+  - **`getUsername()`**: Allows retrieval of the employee's username.
+  - **`setUsername(String username)`**: Allows updating the employee's username.
+  
+- **Enhanced `menu()` method**:
+  - Added a more structured menu with placeholders for future options, like viewing payroll options and payslips.
+
+- **Added `viewPayslip()` method**:
+  - Simulates the functionality of viewing an employee's payslip by printing a message with the employee's username.
+  - This method could be extended in the future to fetch actual payslip data.
+
+- **Class created with basic functionality**:
+  - **Constructor**: Initializes the employee's `username`.
+  - **`menu()` method**: Displays a simple employee menu with the option to view the payslip.

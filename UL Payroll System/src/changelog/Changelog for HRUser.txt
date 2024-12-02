@@ -1,0 +1,9 @@
+### Changelog for `HRUser` Class
+
+#### Version 1.0.2
+#### Date:02/12/2024
+
+- **Class created with basic functionality**:
+  - **`menu()` method**: Prompts the HR user to input an employee ID for promotion and triggers the promotion process using the `PromotionManager` class.
+  - Utilizes `Scanner` for user input to read the employee ID.
+  - **Promotion logic**: Calls `PromotionManager.promoteEmployeeById()` method to handle the promotion process for the employee.
