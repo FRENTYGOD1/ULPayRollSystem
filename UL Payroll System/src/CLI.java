@@ -14,6 +14,12 @@ import database.DatabaseUtility;
 import users.HRUser;
 import utils.TaxCalculation;
 
+/**
+ * The main class for the UL Payroll System Command-Line Interface (CLI).
+ * This class manages the login, user authentication, main menu, and HR-specific functionalities.
+ * It handles payroll system operations such as viewing personal information, salary details,
+ * HR tasks like promotions, and part-time employee salary management.
+ */
 public class CLI {
 
     // PayrollSystem is used for staff management
@@ -25,6 +31,13 @@ public class CLI {
     // userCredentials saves username, password, and role information
     private static final Map<String, String[]> userCredentials = new HashMap<>();
 
+    /**
+     * Main method to start the UL Payroll System CLI.
+     * It prompts the user for login credentials, authenticates them,
+     * and displays the main menu based on their role.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         // Load usernames and passwords
         loadCredentials();
@@ -66,7 +79,13 @@ public class CLI {
         scanner.close();
     }
 
-    // Main menu for different roles like HR, employee, etc.
+    /**
+     * Displays the main menu for the logged-in user, where different options are shown based on their role.
+     *
+     * @param scanner Scanner object used for user input.
+     * @param role The role of the logged-in user (HR, Employee, etc.).
+     * @param username The username of the logged-in user.
+     */
     private static void handleMainMenu(Scanner scanner, String role, String username) {
         boolean stayInMenu = true;
         while (stayInMenu) {
@@ -105,7 +124,10 @@ public class CLI {
         }
     }
 
-    // Load user data from CSV files (username, password, role)
+    /**
+     * Loads user credentials (username, password, role) from CSV files.
+     * The credentials are used for login and user role management.
+     */
     private static void loadCredentials() {
         String[] files = {"EmployeeData.csv", "HRData.csv"};
         for (String file : files) {
@@ -127,7 +149,12 @@ public class CLI {
         }
     }
 
-    // Get user role based on access level from CSV
+    /**
+     * Determines the role of a user based on their access level from the CSV data.
+     *
+     * @param accessLevel The access level of the user from the CSV.
+     * @return The role corresponding to the access level.
+     */
     private static String getRoleFromAccessLevel(String accessLevel) {
         switch (accessLevel) {
             case "1":
@@ -145,7 +172,13 @@ public class CLI {
         }
     }
 
-    // Check if username and password are correct
+    /**
+     * Authenticates a user by checking the provided username and password against stored credentials.
+     *
+     * @param username The username entered by the user.
+     * @param password The password entered by the user.
+     * @return The role of the authenticated user or null if authentication fails.
+     */
     private static String authenticate(String username, String password) {
         String normalizedUsername = username.toLowerCase();
         if (userCredentials.containsKey(normalizedUsername) && userCredentials.get(normalizedUsername)[0].equals(password)) {
@@ -154,14 +187,21 @@ public class CLI {
         return null;
     }
 
-    // Display the current date and time
+    /**
+     * Displays the current date and time.
+     */
     private static void displayCurrentDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         System.out.println("\nCurrent Date and Time: " + currentDateTime.format(formatter));
     }
 
-    // Show user personal information
+    /**
+     * Displays the salary details of the logged-in user.
+     *
+     * @param scanner Scanner object used for user input.
+     * @param username The username of the logged-in user.
+     */
     private static void showPersonalInformationMenu(Scanner scanner, String username) {
         System.out.println("\n===== Personal Information Menu =====");
         displayEmployeeDetails(username);
@@ -179,7 +219,11 @@ public class CLI {
         scanner.nextLine(); // Wait for user input
     }
 
-    // Handle HR-specific tasks like promotions or payslips
+    /**
+     * Manages HR-specific tasks like promoting staff, generating payslips, and handling part-time salary.
+     *
+     * @param scanner Scanner object used for user input.
+     */
     private static void manageHrTasks(Scanner scanner) {
         boolean stayInMenu = true;
         while (stayInMenu) {
@@ -202,7 +246,7 @@ public class CLI {
                     System.out.print("Enter employee ID to generate payslip: ");
                     String employeeId = scanner.nextLine();  // Take input for employee ID
 
-                    // 调用根据 employeeId 获取工资单的方法
+
                     Payslip payslip = payrollSystem.getPaySlipById(employeeId);
 
                     if (payslip != null) {
@@ -212,7 +256,6 @@ public class CLI {
                         System.out.println("Error: No employee found with the given ID.");
                     }
 
-                    // 生成所有员工的工资单
                     payrollSystem.generatePayslips();
                     break;
 
@@ -233,8 +276,11 @@ public class CLI {
 
 
 
-
-    // Open database menu for HR
+    /**
+     * Displays the database menu for HR users, allowing them to manage the payroll database.
+     *
+     * @param scanner Scanner object used for user input.
+     */
     private static void manageDatabaseMenu(Scanner scanner) {
         try {
             databaseMenu.displayDatabaseMenu(scanner);
@@ -242,8 +288,11 @@ public class CLI {
             System.out.println("Error accessing database menu: " + e.getMessage());
         }
     }
-
-    // Show employee information from CSV
+    /**
+     * Displays the details of an employee based on the logged-in username.
+     *
+     * @param username The username of the employee.
+     */
     private static void displayEmployeeDetails(String username) {
         String[] files = {"employeeData.csv", "HRData.csv"};
         for (String file : files) {
@@ -272,7 +321,12 @@ public class CLI {
         System.out.println("Employee details not found.");
     }
 
-    // Display salary details of the employee
+    /**
+     * Displays the salary details of the logged-in user based on their position and scale point.
+     *
+     * @param username The username of the employee.
+     * @return True if salary details are found, false otherwise.
+     */
     private static boolean displaySalaryDetails(String username) {
         String[] files = {"EmployeeData.csv", "HRData.csv"};
         String position = "";
@@ -301,6 +355,12 @@ public class CLI {
         return false;
     }
 
+
+    /**
+     * Handles the salary calculation and claim process for part-time employees.
+     *
+     * @param scanner Scanner object used for user input.
+     */
     private static void handlePartTimeSalary(Scanner scanner) {
         System.out.print("Enter part-time employee ID: ");
         String employeeId = scanner.nextLine().trim();
