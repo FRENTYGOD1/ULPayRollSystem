@@ -1,0 +1,49 @@
+# Changelog for DatabaseMenu.java
+## Version 1.0.2
+### Date: 02/12/2024
+
+### Added:
+
+#### Menu Display:
+##### Added a user-friendly interface for the database management menu with six options:
+- Check CSV list and structures.
+- Add or delete employee data.
+- Backup and restore data.
+- View CSV file data.
+- Exit the system.
+
+#### Add or Delete Employee Functionality:
+##### Add Employee:
+- Collects employee details such as name, position, department, scale point, access level, and age.
+- Automatically generates unique IDs, accounts, and passwords.
+- Saves employee details to EmployeeData.csv.
+
+##### Delete Employee:
+- Supports searching for employee data by name (case-insensitive).
+- Displays matching records and allows the user to select and delete a specific record.
+- Reorders IDs in the CSV file after deletion to maintain consistency.
+
+#### CSV Management:
+##### View CSV Files:
+- Lists all CSV files in the default directory.
+- Allows users to view the structure (columns) and optionally, the content of selected CSV files.
+##### Structure Display:
+- Displays the header and data structure for the selected file.
+
+#### Data Backup and Restore:
+- Integrated methods to perform data backup and restore operations.
+- Leveraged DatabaseUtility methods for extensible backup and restore functionalities.
+
+#### Utility Integration:
+##### Leveraged DatabaseUtility for:
+- File operations such as reading, writing, and updating CSV data.
+- Path management for default CSV locations.
+- Supporting modular and reusable utility methods.
+
+##### Robust Input Handling:
+- Incorporated input validation to ensure proper user choices in menu navigation and record selection.
+- Included buffer clearing after reading numeric inputs.
+
+#### Code Organization:
+- Modularized functions for specific tasks, ensuring readability and maintainability.
+- Organized methods under logical sections (Add, Delete, Backup, Restore, CSV management) with detailed documentation.

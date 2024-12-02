@@ -1,0 +1,57 @@
+# Changelog for DatabaseUtility.java
+## Version 1.0.2
+### Date: 02/12/2024
+
+### Added functionality for handling CSV operations:
+- writeCsv: Writes data to a CSV file.
+- readCsv: Reads data from a CSV file.
+- getDataHeaders: Retrieves the headers of a CSV file.
+- addDataToCsvFile: Adds new data to a CSV file, generating unique values for specific columns.
+- deleteRowByIndex: Deletes a row from a CSV file based on the matching data.
+
+### Backup Features:
+- backupFiles: Recursively backs up files and directories from a source to a backup directory.
+- BackupDataExtends: Handles the backup logic, backing up files from the default CSV path to the backup location.
+- getBackpath: Retrieves the backup directory path and creates it if it doesn't exist.
+
+### Restore Features:
+- RestoreData: Restores files and directories from a backup directory to the original directory.
+- RestoreDataExtends: Handles the restoration logic, restoring data from the backup location to the original directory.
+
+### Bug Fixes:
+- Fixed handling of invalid file paths in readCsv method.
+- Improved error handling in writeCsv and readCsv to ensure that file reading/writing issues are reported correctly.
+
+### Refinements:
+- Refined the addDataToCsvFile method to handle edge cases where the ID, account, or password could not be parsed as integers.
+- Added better logging for backup and restore operations, including path creation messages and error handling.
+
+### Performance:
+- Optimized the readCsv method for better memory management when processing large CSV files.
+
+### New Method:
+- getDefaultCsvPath: Returns the default path to the CSV directory (src/resource/csv/).
+
+### Enhancements:
+- Added automatic handling of directory creation in backupFiles and RestoreData methods.
+- Improved logging to indicate success or failure of backup and restore operations more clearly.
+
+### Improved Error Handling:
+- Enhanced error handling in backupFiles to log any potential issues during file copying operations.
+- More robust checks and logging for file/directory existence in the RestoreData method.
+
+### Updated Documentation:
+- Improved method documentation with more detailed descriptions and examples of usage.
+- Added comments throughout the code to clarify the purpose of key sections and improve code readability.
+
+
+### Code Refactor:
+- Refactored the addDataToCsvFile method to handle CSV data more efficiently, minimizing unnecessary reads and writes.
+- Simplified error handling and removed redundant code.
+
+### Performance Improvements:
+- Optimized the writeCsv and readCsv methods to handle larger datasets more efficiently.
+
+### Miscellaneous:
+- Reorganized methods into logical sections to improve readability and maintainability.
+Reorganized methods into logical sections to improve readability and maintainability.
