@@ -4,28 +4,45 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * The TaxCalculation class handles the calculation of taxes based on gross salary,
+ * as well as the display of salary details including deductions and net pay.
+ */
 public class TaxCalculation {
-    private double taxPayable;//basic tax-payable
+    private double taxPayable; // Basic tax payable
 
-    //Calculation of taxes
+    /**
+     * Calculates the tax payable based on the gross salary.
+     * It uses a progressive tax rate system: a lower tax rate applies to earnings up to a threshold,
+     * and a higher tax rate applies to earnings above that threshold.
+     *
+     * @param grossPay The gross salary of the employee.
+     * @return The total tax payable on the gross salary.
+     */
     public double calculateTax(double grossPay) {
         double lowTaxRateThreshold = 42000; // €42,000 lower tax rate limit
         double lowTaxRate = 0.2;
         double highTaxRate = 0.4;
 
-        //the part of low tax
+        // Calculate tax payable
         if (grossPay <= lowTaxRateThreshold) {
-            taxPayable = grossPay * lowTaxRate;
-        } else {//high tax
-            //the part of low
-            taxPayable = lowTaxRateThreshold * lowTaxRate;
-            //the part of high
-            taxPayable += (grossPay - lowTaxRateThreshold) * highTaxRate;
+            taxPayable = grossPay * lowTaxRate; // Low tax rate
+        } else {
+            taxPayable = lowTaxRateThreshold * lowTaxRate; // Low tax portion
+            taxPayable += (grossPay - lowTaxRateThreshold) * highTaxRate; // High tax portion
         }
         return taxPayable;
     }
 
-    // Method to display salary details based on position and scale point
+    /**
+     * Displays salary details based on position and scale point.
+     * This includes annual salary, monthly salary (before tax), monthly tax deduction,
+     * and monthly net pay (after tax).
+     *
+     * @param position The position of the employee.
+     * @param scalePoint The scale point of the employee.
+     * @param filePath The file path to the salary data CSV.
+     */
     public void displaySalaryDetails(String position, String scalePoint, String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
