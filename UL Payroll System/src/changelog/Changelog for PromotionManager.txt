@@ -1,0 +1,19 @@
+### Changelog for `PromotionManager` Class
+
+#### Version 1.0.2
+#### Date: 02/12/2024#
+
+- **Class created to handle employee promotion**:
+  - **`promoteEmployeeById(String employeeId)`**:
+    - Reads employee details from a CSV file (`EmployeeData.csv`).
+    - Promotes an employee by their ID if eligible (checks scale points).
+    - Updates the employee's scale point in the CSV file if promotion is possible.
+    - Outputs a message about promotion status:
+      - If the employee has no scale points or has reached the max for their position, appropriate messages are displayed.
+      - If promotion is successful, scale point is incremented.
+    - Writes updated employee data back to the CSV file.
+
+  - **`getMaxScaleForPosition(String position)`**:
+    - Determines the maximum scale point for a given position (e.g., Full Professor and Professor have a max scale of 10, others have a max scale of 8).
+
+- **CSV Path**: Ensure the file path for the CSV file is updated according to the actual location (`src/resource/csv/EmployeeData.csv`).

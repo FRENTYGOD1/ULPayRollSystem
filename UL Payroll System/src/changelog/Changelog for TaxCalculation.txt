@@ -1,0 +1,25 @@
+### Changelog for `TaxCalculation` Class
+
+#### Version 1.0.2
+#### Date: 02/12/2024
+
+- **Class created to handle tax calculations and salary display**:
+  - **`calculateTax(double grossPay)`**:
+    - Calculates the tax payable based on the provided gross pay.
+    - The tax calculation is done using two tax rates:
+      - **Low tax rate**: 20% for income up to €42,000.
+      - **High tax rate**: 40% for income above €42,000.
+    - Returns the total tax payable based on these thresholds.
+
+  - **`displaySalaryDetails(String position, String scalePoint, String filePath)`**:
+    - Displays salary details for a specific position and scale point.
+    - Reads employee salary information from a CSV file.
+    - For matching position and scale point, calculates the annual and monthly salary, monthly tax, and monthly net pay after tax.
+    - Displays the following details:
+      - Annual Salary
+      - Monthly Salary (before tax)
+      - Monthly Tax Deduction
+      - Monthly Net Pay (after tax)
+    - If no match is found, displays a message indicating that salary details were not found for the given position and scale point.
+
+- **Error Handling**: Added exception handling for both **IOException** and **NumberFormatException** to handle cases where file reading or salary parsing fails.
