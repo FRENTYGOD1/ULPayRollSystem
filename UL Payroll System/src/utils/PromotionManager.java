@@ -4,6 +4,11 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+/**
+ * The PromotionManager class handles the promotion process for employees.
+ * It reads employee data from a CSV file, checks the eligibility for promotion based on scale points,
+ * and updates the employee's scale points if promotion is possible.
+ */
 public class PromotionManager {
 
     private static final String EMPLOYEE_CSV = "src/resource/csv/EmployeeData.csv"; // Replace with actual CSV path
